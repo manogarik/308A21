@@ -38,25 +38,63 @@ const adventurer = {
     //PART2
     //CLASS FANTACY
     class Character {
+        static MAX_HEALTH = 100;
         constructor (name) {
           this.name = name;
           this.health = 100;
           this.inventory = [];
         }
+        
         roll (mod = 0) {
             const result = Math.floor(Math.random() * 20) + 1 + mod;
             console.log(`${this.name} rolled a ${result}.`)
             }
             
       }
-const robin = new Character("Robin");
+
+
+//PART3
+//CLASS FEATURES
+class Adventurer extends Character {
+    static ROLES = ["Fighter","Healer","Wizard"];
+    constructor (name, role) {
+      super(name);
+      // Adventurers have specialized roles.
+      this.role = role;
+      // Every adventurer starts with a bed and 50 gold coins.
+      this.inventory.push("bedroll", "50 gold coins");
+    }
+    // Adventurers have the ability to scout ahead of them.
+    scout () {
+      console.log(`${this.name} is scouting ahead...`);
+      super.roll();
+    }
+
+    //Metho duel
+    duel(adventurer){
+
+    }
+  }
+
+  //CREATING COMPANION CLASS
+  class Companion extends Character{
+    constructor (name,type)
+    {
+        super(name)
+        this.type = type;
+        
+    }
+  }
+
+const robin = new Adventurer("Robin","Leader");
 robin.inventory = ["sword", "potion", "artifact"];
-robin.companion = new Character("Leo");
-robin.companion.type = "Cat";
-robin.companion.companion = new Character("Frank");
-robin.companion.companion.type = "Flea";
-robin.companion.companion.inventory = ["small hat", "sunglasses"];
+const leo = new Companion("Leo","Cat");
+const frank = new Companion ("Frank","Flea");
+frank.inventory = ["small hat", "sunglasses"];
 robin.roll();
-robin.companion.roll();
-robin.companion.companion.roll();
+leo.roll();
+frank.roll();
 console.log(robin);
+console.log(leo);
+console.log(frank);
+  
