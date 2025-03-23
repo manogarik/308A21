@@ -55,13 +55,29 @@ const adventurer = {
 
 //PART3
 //CLASS FEATURES
+class Companion extends Character{
+    constructor (name,type,companion)
+    {
+        super(name),
+        this.type = type,
+        this.companion = companion;
+    }
+  }
+  
 class Adventurer extends Character {
-    static ROLES = ["Fighter","Healer","Wizard"];
-    constructor (name, role) {
+    static roles = ["Fighter","Healer","Wizard"];
+    //create obj for companion
+    constructor (name, role,companion) {
       super(name);
       // Adventurers have specialized roles.
+      if(Adventurer.roles.indexOf(role) === -1)
+      {
+        throw new Error ("Role not found in the given roles");
+        
+      }
       this.role = role;
       // Every adventurer starts with a bed and 50 gold coins.
+      this.companion = companion,
       this.inventory.push("bedroll", "50 gold coins");
     }
     // Adventurers have the ability to scout ahead of them.
@@ -77,24 +93,25 @@ class Adventurer extends Character {
   }
 
   //CREATING COMPANION CLASS
-  class Companion extends Character{
-    constructor (name,type)
-    {
-        super(name)
-        this.type = type;
-        
-    }
-  }
-
-const robin = new Adventurer("Robin","Leader");
-robin.inventory = ["sword", "potion", "artifact"];
-const leo = new Companion("Leo","Cat");
 const frank = new Companion ("Frank","Flea");
 frank.inventory = ["small hat", "sunglasses"];
-robin.roll();
+const leo = new Companion("Leo","Cat",frank);
+try{
+    const robin = new Adventurer("Robin","Healer",leo);
+    robin.inventory = ["sword", "potion", "artifact"];
+    robin.roll();
+    
+}
+catch(error)
+{
+    console.error(error.message);
+}
+
+
+//frank.companion=leo;
+
+
 leo.roll();
 frank.roll();
-console.log(robin);
-console.log(leo);
-console.log(frank);
+//PART 5
   
