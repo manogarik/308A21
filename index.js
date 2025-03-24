@@ -17,6 +17,7 @@ const adventurer = {
     roll (mod = 0) {
             const result = Math.floor(Math.random() * 20) + 1 + mod;
             console.log(`${this.name} rolled a ${result}.`)
+            return result;
             }
             
         }
@@ -83,12 +84,33 @@ class Adventurer extends Character {
     // Adventurers have the ability to scout ahead of them.
     scout () {
       console.log(`${this.name} is scouting ahead...`);
-      super.roll();
+      
     }
 
     //Metho duel
     duel(adventurer){
-
+        
+       
+        while(this.health >= 50 && adventurer.health >= 50)
+        {
+            if(super.roll() < adventurer.roll())
+            {
+                this.health -=1;
+            }
+            else{
+            adventurer.health -=1;
+            }
+            console.log(`${this.name} : health = ${this.health}`);
+            console.log(` ${adventurer.name} : health = ${adventurer.health}`);
+        
+        }
+        if(this.health>50)
+        {
+            console.log(`${this.name} is the winner`);
+        }
+        else{
+            console.log(`${adventurer.name} is the winner`);
+        }
     }
   }
 
@@ -96,16 +118,16 @@ class Adventurer extends Character {
 const frank = new Companion ("Frank","Flea");
 frank.inventory = ["small hat", "sunglasses"];
 const leo = new Companion("Leo","Cat",frank);
-try{
-    const robin = new Adventurer("Robin","Healer",leo);
-    robin.inventory = ["sword", "potion", "artifact"];
-    robin.roll();
-    
-}
-catch(error)
-{
-    console.error(error.message);
-}
+//try{
+const robin = new Adventurer("Robin","Healer",leo);
+robin.inventory = ["sword", "potion", "artifact"];
+robin.roll();
+console.log(robin.health);
+//}
+//catch(error)
+//{
+    //console.error(error.message);
+//}
 
 
 //frank.companion=leo;
@@ -113,5 +135,34 @@ catch(error)
 
 leo.roll();
 frank.roll();
-//PART 5
+
+//PART5
+class AdventurerFactory {  
+    constructor (role) {
+      this.role = role;
+      this.adventurers = [];
+    }
+    generate (name) {
+      const newAdventurer = new Adventurer(name, this.role);
+      this.adventurers.push(newAdventurer);
+    }
+    findByIndex (index) {
+      return this.adventurers[index];
+    }
+    findByName (name) {
+      return this.adventurers.find((a) => a.name === name);
+    }
+  }
   
+  const healers = new AdventurerFactory("Healer");
+  const deva = healers.generate("Deva");
+  const mano = healers.generate("Mano");
+  console.log(healers);
+
+  //PART6
+  //DVELOPING SKILLS
+ const karthik = new Adventurer("Karthik","Healer",leo);
+ karthik.health = 75;
+ robin.health =60;
+ karthik.inventory = ["sword", "potion", "artifact"];
+ robin.duel(karthik);
