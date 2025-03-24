@@ -48,7 +48,8 @@ const adventurer = {
         
         roll (mod = 0) {
             const result = Math.floor(Math.random() * 20) + 1 + mod;
-            console.log(`${this.name} rolled a ${result}.`)
+            //console.log(`${this.name} rolled a ${result}.`)
+            return result;
             }
             
       }
@@ -93,15 +94,17 @@ class Adventurer extends Character {
        
         while(this.health >= 50 && adventurer.health >= 50)
         {
-            if(super.roll() < adventurer.roll())
+            const res1 = super.roll();
+            const res2 = adventurer.roll();
+            if(res1 < res2)
             {
-                this.health -=1;
+                this.health =this.health -1;
             }
             else{
             adventurer.health -=1;
             }
-            console.log(`${this.name} : health = ${this.health}`);
-            console.log(` ${adventurer.name} : health = ${adventurer.health}`);
+            console.log(`${this.name} : health = ${this.health} : roll ${res1}`);
+            console.log(` ${adventurer.name} : health = ${adventurer.health} : roll ${res2}`);
         
         }
         if(this.health>50)
